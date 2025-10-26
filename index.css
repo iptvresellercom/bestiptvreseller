@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom animations for sliding effects */
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+/* Footer card styling */
+.footer-card {
+  background-color: #0A0A0A;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+}
+
+.footer-card:hover {
+  background-color: #1A1A1A;
+  transform: translateY(-2px);
+}
+
+/* WordPress content styling */
+.prose {
+  color: #d1d5db; /* text-gray-300 */
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: #ffffff;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  line-height: 1.75;
+}
+
+.prose ul,
+.prose ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+}
+
+.prose strong,
+.prose b {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.prose a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #d1d5db;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose-invert {
+  --tw-prose-body: #d1d5db;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-lead: #9ca3af;
+  --tw-prose-links: #ffffff;
+  --tw-prose-bold: #ffffff;
+  --tw-prose-counters: #6b7280;
+  --tw-prose-bullets: #4b5563;
+  --tw-prose-hr: #374151;
+  --tw-prose-quotes: #9ca3af;
+  --tw-prose-quote-borders: #374151;
+  --tw-prose-captions: #6b7280;
+  --tw-prose-code: #ffffff;
+  --tw-prose-pre-code: #ffffff;
+  --tw-prose-pre-bg: #1f2937;
+  --tw-prose-th-borders: #4b5563;
+  --tw-prose-td-borders: #374151;
+  --tw-prose-invert-body: #d1d5db;
+  --tw-prose-invert-headings: #ffffff;
+  --tw-prose-invert-lead: #9ca3af;
+  --tw-prose-invert-links: #ffffff;
+  --tw-prose-invert-bold: #ffffff;
+  --tw-prose-invert-counters: #9ca3af;
+  --tw-prose-invert-bullets: #6b7280;
+  --tw-prose-invert-hr: #374151;
+  --tw-prose-invert-quotes: #f3f4f6;
+  --tw-prose-invert-quote-borders: #4b5563;
+  --tw-prose-invert-captions: #9ca3af;
+  --tw-prose-invert-code: #ffffff;
+  --tw-prose-invert-pre-code: #ffffff;
+  --tw-prose-invert-pre-bg: #1f2937;
+  --tw-prose-invert-th-borders: #4b5563;
+  --tw-prose-invert-td-borders: #374151;
+}
