@@ -55,7 +55,7 @@ const mockPanels = [
 ];
 
 // Mock the fetch function for testing
-global.fetch = jest.fn((url) => {
+(global as any).fetch = (jest.fn((url) => {
   if (url.includes('/wp-json/wp/v2/iptv-panels')) {
     if (url.includes('slug=')) {
       // Return a single panel by slug
@@ -74,7 +74,7 @@ global.fetch = jest.fn((url) => {
     }
   }
   return Promise.reject(new Error('Not found'));
-}) as jest.Mock;
+}) as any);
 
 const TestApp: React.FC = () => {
   return (

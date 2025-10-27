@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
-import ChatWidget from '../components/ChatWidget';
 import PremiumResellerHero from '../components/PremiumResellerHero';
 import { motion } from 'framer-motion';
 
@@ -120,8 +118,6 @@ const PanelsPage: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
-        <ChatWidget />
       </div>
     );
   }
@@ -141,8 +137,6 @@ const PanelsPage: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
-        <ChatWidget />
       </div>
     );
   }
@@ -235,8 +229,6 @@ const PanelsPage: React.FC = () => {
         {/* Premium IPTV Reseller Section */}
         <PremiumResellerHero />
       </main>
-      <Footer />
-      <ChatWidget />
     </div>
   );
 };

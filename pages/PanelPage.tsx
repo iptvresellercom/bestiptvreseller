@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
-import ChatWidget from '../components/ChatWidget';
 import { data as channelsData } from '../constants/chnls.ts';
 
 interface IPTVPanel {
@@ -115,8 +113,6 @@ const PanelPage: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
-        <ChatWidget />
       </div>
     );
   }
@@ -136,8 +132,6 @@ const PanelPage: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
-        <ChatWidget />
       </div>
     );
   }
@@ -945,8 +939,6 @@ const PanelPage: React.FC = () => {
           </div>
         </div>
       </main>
-      <Footer />
-      <ChatWidget />
     </div>
   );
 };

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
-import ChatWidget from '../components/ChatWidget';
 
 interface BlogPost {
   id: number;
@@ -68,8 +66,6 @@ const BlogPostPage: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
-        <ChatWidget />
       </div>
     );
   }
@@ -89,8 +85,6 @@ const BlogPostPage: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
-        <ChatWidget />
       </div>
     );
   }
@@ -149,8 +143,6 @@ const BlogPostPage: React.FC = () => {
           </article>
         </div>
       </main>
-      <Footer />
-      <ChatWidget />
     </div>
   );
 };

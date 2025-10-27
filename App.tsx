@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
+import ScrollToTop from './components/ScrollToTop';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
 import FeatureSection from './components/FeatureSection';
@@ -10,6 +11,8 @@ import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 import PanelPage from './pages/PanelPage';
 import PanelsPage from './pages/PanelsPage';
+import ContactPage from './pages/ContactPage';
+import AboutPage from './pages/AboutPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import WordPressPage from './pages/WordPressPage';
@@ -19,6 +22,7 @@ import PremiumResellerHero from './components/PremiumResellerHero';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="bg-black text-white">
         <Header />
         <main>
@@ -36,6 +40,8 @@ function App() {
             } />
             <Route path="/blog/:postSlug" element={<BlogPostPage />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/panels/:panelSlug" element={<PanelPage />} />
             <Route path="/panels" element={<PanelsPage />} />
             <Route path="/:pageSlug" element={<WordPressPage />} />
