@@ -245,58 +245,123 @@ const Header: React.FC = () => {
         
         {/* Mobile Menu Drawer */}
         {isMobileMenuOpen && (
-          <div className="xl:hidden fixed inset-0 top-0 left-0 w-full h-full bg-black/90 backdrop-blur-md z-50 flex flex-col pt-20 animate-slide-down">
-            <div className="flex justify-end pr-6">
-              <button 
-                className="text-white p-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-                aria-label="Close menu"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-6 py-8 flex-grow">
-              {menuItems.map((item) => (
-                <div key={item.id} className="w-full text-center">
-                  <div className="flex flex-col items-center">
-                    {renderMenuItem(item)}
-                    {item.children && item.children.length > 0 && (
-                      <div className="mt-2 flex flex-col gap-2 items-center">
-                        {item.children.map((child) => {
-                          const isChildExternal = child.href.startsWith('http');
-                          return (
-                            <div key={child.id} className="py-1">
-                              {isChildExternal ? (
-                                <a 
-                                  href={child.href} 
-                                  className="text-sm text-white/80 hover:opacity-75 transition-opacity duration-200"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                  {child.name}
-                                </a>
-                              ) : (
-                                <Link 
-                                  to={convertWordPressUrlToRelativeSlug(child.href)} 
-                                  className="text-sm text-white/80 hover:opacity-75 transition-opacity duration-200"
-                                  onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                  {child.name}
-                                </Link>
+          <>
+            {/* Backdrop Overlay */}
+            <div 
+              className="xl:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 animate-slide-down"
+              onClick={() => setIsMobileMenuOpen(false)}
+            ></div>
+            
+            {/* Menu Drawer */}
+            <div className="xl:hidden fixed top-0 right-0 w-80 h-full bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 z-50 flex flex-col shadow-2xl animate-slide-in-right">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
+                <h2 className="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Menu</h2>
+                <button 
+                  className="text-white hover:bg-white/10 p-2 rounded-lg transition-colors duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Close menu"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Menu Items */}
+              <div className="flex-1 overflow-y-auto p-6">
+                <div className="flex flex-col gap-2">
+                  {menuItems.map((item, index) => (
+                    <div 
+                      key={item.id} 
+                      className="w-full"
+                      style={{ 
+                        animation: `slideInRight 0.3s ease-out ${index * 0.05}s both` 
+                      }}
+                    >
+                      <div className="flex flex-col">
+                        {/* Main Menu Item */}
+                        <div className="group">
+                          {item.href.startsWith('http') ? (
+                            <a
+                              href={item.href}
+                              className="flex items-center justify-between px-4 py-3 text-white font-medium rounded-lg hover:bg-white/10 transition-all duration-200 group-hover:pl-6"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <span className="text-base">{item.name}</span>
+                              {item.children && item.children.length > 0 && (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
                               )}
-                            </div>
-                          );
-                        })}
+                            </a>
+                          ) : (
+                            <Link
+                              to={convertWordPressUrlToRelativeSlug(item.href)}
+                              className="flex items-center justify-between px-4 py-3 text-white font-medium rounded-lg hover:bg-white/10 transition-all duration-200 group-hover:pl-6"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <span className="text-base">{item.name}</span>
+                              {item.children && item.children.length > 0 && (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              )}
+                            </Link>
+                          )}
+                        </div>
+                        
+                        {/* Sub Menu Items */}
+                        {item.children && item.children.length > 0 && (
+                          <div className="ml-4 mt-1 flex flex-col gap-1 border-l-2 border-gray-700/50 pl-4">
+                            {item.children.map((child) => {
+                              const isChildExternal = child.href.startsWith('http');
+                              return (
+                                <div key={child.id}>
+                                  {isChildExternal ? (
+                                    <a 
+                                      href={child.href} 
+                                      className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                      {child.name}
+                                    </a>
+                                  ) : (
+                                    <Link 
+                                      to={convertWordPressUrlToRelativeSlug(child.href)} 
+                                      className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200"
+                                      onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                      {child.name}
+                                    </Link>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              
+              {/* Footer */}
+              <div className="p-6 border-t border-gray-700/50">
+                <Link
+                  to="/contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full bg-white text-black text-center font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-105"
+                >
+                  Get Started
+                </Link>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </nav>
     </header>
