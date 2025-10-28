@@ -106,10 +106,10 @@ const PanelPage: React.FC = () => {
       <div className="bg-black text-white min-h-screen">
         <Header />
         <main className="pt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
             <div className="text-center py-20">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white mb-4"></div>
-              <p className="text-white/70">Loading panel...</p>
+              <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white mb-6"></div>
+              <p className="text-white/70 text-xl">Loading panel...</p>
             </div>
           </div>
         </main>
@@ -122,11 +122,11 @@ const PanelPage: React.FC = () => {
       <div className="bg-black text-white min-h-screen">
         <Header />
         <main className="pt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
             <div className="text-center py-20">
-              <h1 className="text-3xl font-bold text-white mb-4">Error</h1>
-              <p className="text-white/70 mb-6">{error || 'Panel not found'}</p>
-              <Link to="/" className="text-white hover:text-white/80 underline">
+              <h1 className="text-4xl font-bold text-white mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Error</h1>
+              <p className="text-white/70 mb-8 text-xl">{error || 'Panel not found'}</p>
+              <Link to="/" className="text-white hover:text-white/80 underline text-lg font-medium">
                 ← Back to Home
               </Link>
             </div>
@@ -368,43 +368,49 @@ const PanelPage: React.FC = () => {
       <Header />
       <main>
         {/* Hero Section - Behind Header */}
-        <div className="relative bg-gradient-to-r from-gray-900 to-black py-32 pt-64 overflow-hidden -mt-20 pt-20">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/10 via-transparent to-transparent"></div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-0">
-            <div className="flex flex-col lg:flex-row items-center gap-8">
+        <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-800 py-32 pt-64 overflow-hidden -mt-20 pt-20">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/30 to-transparent"></div>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-0">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="lg:w-1/3 flex justify-center">
                 {panel._embedded?.['wp:featuredmedia']?.[0]?.source_url ? (
-                  <img 
-                    src={panel._embedded['wp:featuredmedia'][0].source_url} 
-                    alt={panel._embedded['wp:featuredmedia'][0].alt_text || panel.title.rendered}
-                    className="w-64 h-64 object-contain rounded-2xl border border-gray-700 p-4 bg-gray-900/50"
-                  />
+                  <div className="relative group">
+                    <img 
+                      src={panel._embedded['wp:featuredmedia'][0].source_url} 
+                      alt={panel._embedded['wp:featuredmedia'][0].alt_text || panel.title.rendered}
+                      className="w-72 h-72 object-contain rounded-3xl border-2 border-gray-600/50 p-6 bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm shadow-2xl group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
                 ) : (
-                  <div className="w-64 h-64 bg-gray-800 rounded-2xl border border-gray-700 flex items-center justify-center">
-                    <div className="text-5xl font-bold text-amber-500">
+                  <div className="w-72 h-72 bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl border-2 border-gray-600/50 flex items-center justify-center shadow-2xl">
+                    <div className="text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                       {panel.title.rendered.charAt(0)}
                     </div>
                   </div>
                 )}
               </div>
               <div className="lg:w-2/3 text-center lg:text-left">
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-4 pt-8">
-                  <h1 className="text-4xl md:text-5xl font-bold">{panel.title.rendered}</h1>
-                  <div className="flex items-center gap-2 bg-green-900/30 border border-green-800/50 rounded-full px-4 py-1">
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-6 pt-8">
+                  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    {panel.title.rendered}
+                  </h1>
+                  <div className="flex items-center gap-2 bg-gradient-to-r from-green-900/40 to-emerald-900/40 border border-green-500/50 rounded-full px-5 py-2 backdrop-blur-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-green-400 text-sm font-medium">Verified Provider</span>
+                    <span className="text-green-400 text-sm font-semibold">Verified Provider</span>
                   </div>
                 </div>
-                <p className="text-lg text-gray-300 mb-6 max-w-3xl">
+                <p className="text-xl text-gray-300 mb-8 max-w-4xl leading-relaxed">
                   {processedExcerpt || 'Premium IPTV panel solution with advanced features and reliable performance.'}
                 </p>
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                  <Link to="#features" className="px-6 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition-colors">
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6">
+                  <Link to="#features" className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-gray-100 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                     View Features
                   </Link>
-                  <Link to="#pricing" className="px-6 py-3 bg-transparent border border-white text-white font-medium rounded-full hover:bg-white/10 transition-colors">
+                  <Link to="#pricing" className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm">
                     View Pricing
                   </Link>
                 </div>
@@ -414,13 +420,15 @@ const PanelPage: React.FC = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="py-12 bg-gray-900/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="py-16 bg-gradient-to-r from-gray-900/80 to-black/80 backdrop-blur-sm">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {panelStats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-                  <div className="text-gray-400">{stat.label}</div>
+                <div key={index} className="text-center group">
+                  <div className="text-4xl font-bold text-white mb-3 group-hover:scale-110 transition-transform duration-300">
+                    {stat.value}
+                  </div>
+                  <div className="text-gray-400 text-lg font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -428,51 +436,54 @@ const PanelPage: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
           {/* Back Link */}
-          <div className="mb-8">
-            <Link to="/panels" className="text-white hover:text-gray-300 flex items-center gap-2 font-medium">
-              ← Back to providers
+          <div className="mb-12">
+            <Link to="/panels" className="text-white hover:text-gray-300 flex items-center gap-3 font-medium text-lg group">
+              <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to providers
             </Link>
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex border-b border-gray-800 mb-10">
+          <div className="flex flex-wrap border-b-2 border-gray-700/50 mb-12 bg-gray-900/30 rounded-t-2xl p-2">
             <button
-              className={`py-4 px-6 font-medium text-lg ${
+              className={`py-4 px-8 font-semibold text-lg rounded-xl transition-all duration-300 ${
                 activeTab === 'features'
-                  ? 'text-white border-b-2 border-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-black bg-white shadow-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
               }`}
               onClick={() => setActiveTab('features')}
             >
               Features
             </button>
             <button
-              className={`py-4 px-6 font-medium text-lg ${
+              className={`py-4 px-8 font-semibold text-lg rounded-xl transition-all duration-300 ${
                 activeTab === 'channels'
-                  ? 'text-white border-b-2 border-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-black bg-white shadow-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
               }`}
               onClick={() => setActiveTab('channels')}
             >
               Channels
             </button>
             <button
-              className={`py-4 px-6 font-medium text-lg ${
+              className={`py-4 px-8 font-semibold text-lg rounded-xl transition-all duration-300 ${
                 activeTab === 'pricing'
-                  ? 'text-white border-b-2 border-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-black bg-white shadow-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
               }`}
               onClick={() => setActiveTab('pricing')}
             >
               Pricing
             </button>
             <button
-              className={`py-4 px-6 font-medium text-lg ${
+              className={`py-4 px-8 font-semibold text-lg rounded-xl transition-all duration-300 ${
                 activeTab === 'support'
-                  ? 'text-white border-b-2 border-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-black bg-white shadow-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
               }`}
               onClick={() => setActiveTab('support')}
             >
@@ -482,12 +493,12 @@ const PanelPage: React.FC = () => {
 
           {/* Tab Content */}
           {activeTab === 'features' && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="lg:col-span-2">
                 {/* About This Panel */}
-                <div className="mb-12" id="features">
-                  <h2 className="text-3xl font-bold mb-8">About This Panel</h2>
-                  <div className="mb-8">
+                <div className="mb-16" id="features">
+                  <h2 className="text-4xl font-bold mb-10 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">About This Panel</h2>
+                  <div className="mb-12 bg-gray-900/40 rounded-2xl p-8 border border-gray-700/50 backdrop-blur-sm">
                     {/* Render the actual content from WordPress with relative URLs */}
                     <HtmlContentWithLinks content={processedContent} />
                   </div>
@@ -495,16 +506,16 @@ const PanelPage: React.FC = () => {
                   {/* Render features if we have them */}
                   {panelFeatures.length > 0 && (
                     <>
-                      <h2 className="text-3xl font-bold mb-8">Key Features</h2>
+                      <h2 className="text-4xl font-bold mb-10 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Key Features</h2>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {panelFeatures.map((feature, index) => (
-                          <div key={index} className="flex items-start gap-4 p-5 bg-gray-900/30 rounded-xl border border-gray-800 hover:border-white/30 transition-colors">
-                            <div className="mt-1 text-white flex-shrink-0">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                          <div key={index} className="group flex items-start gap-5 p-6 bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl border border-gray-700/50 hover:border-white/40 hover:bg-gradient-to-br hover:from-gray-700/60 hover:to-gray-800/60 transition-all duration-300 backdrop-blur-sm">
+                            <div className="mt-1 text-white flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                               </svg>
                             </div>
-                            <span className="text-white text-lg">{feature}</span>
+                            <span className="text-white text-lg font-medium">{feature}</span>
                           </div>
                         ))}
                       </div>
@@ -513,14 +524,14 @@ const PanelPage: React.FC = () => {
                 </div>
 
                 {/* Why Choose This Panel */}
-                <div className="mb-12">
-                  <h2 className="text-3xl font-bold mb-6">Why Choose {panel.title.rendered}?</h2>
-                  <div className="bg-gray-900/30 rounded-2xl p-8 border border-gray-800">
-                    <p className="text-lg text-gray-300 mb-6">
+                <div className="mb-16">
+                  <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Why Choose {panel.title.rendered}?</h2>
+                  <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl p-10 border border-gray-700/50 backdrop-blur-sm">
+                    <p className="text-xl text-gray-300 mb-6 leading-relaxed">
                       Our management system is designed to empower resellers with automation, growth tools, and profitability features. 
                       We focus on providing the tools you need to build and expand your IPTV business.
                     </p>
-                    <p className="text-lg text-gray-300">
+                    <p className="text-xl text-gray-300 leading-relaxed">
                       With real-time analytics and stable performance, you can confidently manage your subscriptions and grow your customer base.
                     </p>
                   </div>
@@ -528,7 +539,7 @@ const PanelPage: React.FC = () => {
 
                 {/* Panel Features Summary */}
                 <div>
-                  <h2 className="text-3xl font-bold mb-8">Panel Features Summary</h2>
+                  <h2 className="text-4xl font-bold mb-10 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Panel Features Summary</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {
                       [
@@ -541,13 +552,13 @@ const PanelPage: React.FC = () => {
                         "EPG Integration",
                         "Real-Time Analytics"
                       ].map((feature, index) => (
-                        <div key={index} className="flex items-center gap-4 p-5 bg-gray-900/30 rounded-xl border border-gray-800">
-                          <div className="text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <div key={index} className="group flex items-center gap-5 p-6 bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl border border-gray-700/50 hover:border-white/40 hover:bg-gradient-to-br hover:from-gray-700/60 hover:to-gray-800/60 transition-all duration-300 backdrop-blur-sm">
+                          <div className="text-white group-hover:scale-110 transition-transform duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
                               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                             </svg>
                           </div>
-                          <span className="text-white text-lg">{feature}</span>
+                          <span className="text-white text-lg font-medium">{feature}</span>
                         </div>
                       ))
                     }
@@ -557,67 +568,67 @@ const PanelPage: React.FC = () => {
 
               <div>
                 {/* Partnership Section */}
-                <div className="bg-gradient-to-br from-gray-800/20 to-black rounded-2xl border border-gray-700/50 p-6 mb-8">
-                  <h3 className="text-2xl font-bold mb-6">Partnership</h3>
-                  <p className="text-gray-300 mb-6">
+                <div className="bg-gradient-to-br from-gray-800/30 to-black/50 rounded-3xl border border-gray-700/50 p-8 mb-8 backdrop-blur-sm">
+                  <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Partnership</h3>
+                  <p className="text-gray-300 mb-8 text-lg leading-relaxed">
                     Provided exclusively by Reselleriptv.com, offering real-time analytics and enterprise-grade stability.
                   </p>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="bg-white/10 p-3 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-5 group">
+                      <div className="bg-white/20 p-4 rounded-xl group-hover:bg-white/30 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                       </div>
                       <div>
-                        <div className="font-bold text-white">Fast Deployment</div>
-                        <div className="text-gray-400 text-sm">Get started in minutes</div>
+                        <div className="font-bold text-white text-lg">Fast Deployment</div>
+                        <div className="text-gray-400">Get started in minutes</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="bg-white/10 p-3 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="flex items-center gap-5 group">
+                      <div className="bg-white/20 p-4 rounded-xl group-hover:bg-white/30 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                       </div>
                       <div>
-                        <div className="font-bold text-white">Secure & Reliable</div>
-                        <div className="text-gray-400 text-sm">Enterprise-grade security</div>
+                        <div className="font-bold text-white text-lg">Secure & Reliable</div>
+                        <div className="text-gray-400">Enterprise-grade security</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="bg-white/10 p-3 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="flex items-center gap-5 group">
+                      <div className="bg-white/20 p-4 rounded-xl group-hover:bg-white/30 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12a7 7 0 11-14 0 7 7 0 0114 0zm0 0H5" />
                         </svg>
                       </div>
                       <div>
-                        <div className="font-bold text-white">24/7 Support</div>
-                        <div className="text-gray-400 text-sm">Always here to help</div>
+                        <div className="font-bold text-white text-lg">24/7 Support</div>
+                        <div className="text-gray-400">Always here to help</div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Quality Guarantee */}
-                <div className="bg-gray-900/30 rounded-2xl p-6 border border-gray-800">
-                  <h3 className="font-bold text-xl mb-4 text-center">Quality Guarantee</h3>
-                  <div className="flex justify-center gap-8">
-                    <div className="text-center">
-                      <div className="text-white mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl p-8 border border-gray-700/50 backdrop-blur-sm">
+                  <h3 className="font-bold text-2xl mb-6 text-center bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Quality Guarantee</h3>
+                  <div className="flex justify-center gap-12">
+                    <div className="text-center group">
+                      <div className="text-white mb-3 group-hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                       </div>
-                      <span className="text-sm">4K/HD Streaming</span>
+                      <span className="text-sm font-medium">4K/HD Streaming</span>
                     </div>
-                    <div className="text-center">
-                      <div className="text-white mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="text-center group">
+                      <div className="text-white mb-3 group-hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M19 12a7 7 0 11-14 0 7 7 0 0114 0zm0 0H5" />
                         </svg>
                       </div>
-                      <span className="text-sm">24/7 Support</span>
+                      <span className="text-sm font-medium">24/7 Support</span>
                     </div>
                   </div>
                 </div>
@@ -626,56 +637,56 @@ const PanelPage: React.FC = () => {
           )}
 
           {activeTab === 'pricing' && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="lg:col-span-2">
-                <h2 className="text-3xl font-bold mb-8">Flexible Pricing Plans</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <h2 className="text-4xl font-bold mb-12 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Flexible Pricing Plans</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {pricingPlans.map((plan, index) => (
                     <div 
                       key={index} 
-                      className={`relative rounded-2xl p-6 border ${
+                      className={`relative rounded-3xl p-8 border-2 backdrop-blur-sm group hover:scale-105 transition-all duration-300 ${
                         plan.popular 
-                          ? 'bg-gradient-to-br from-gray-700/30 to-gray-800/10 border-white' 
-                          : 'bg-gray-900/30 border-gray-700'
+                          ? 'bg-gradient-to-br from-gray-700/40 to-gray-800/20 border-white/50 shadow-2xl' 
+                          : 'bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-700/50 hover:border-white/30'
                       }`}
                     >
                       {plan.popular && (
-                        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-white text-black text-xs font-bold px-4 py-1 rounded-full">
+                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-black text-sm font-bold px-6 py-2 rounded-full shadow-lg">
                           Most Popular
                         </div>
                       )}
-                      <div className="text-center mb-6">
-                        <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-                        <div className="text-3xl font-bold text-white">{plan.price}</div>
+                      <div className="text-center mb-8">
+                        <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">{plan.name}</h3>
+                        <div className="text-4xl font-bold text-white mb-2">{plan.price}</div>
                         {plan.savings && (
-                          <p className="text-gray-300 mt-2">{plan.savings}</p>
+                          <p className="text-green-400 font-semibold text-lg">{plan.savings}</p>
                         )}
                       </div>
-                      <ul className="space-y-3 mb-6">
+                      <ul className="space-y-4 mb-8">
                         <li className="flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white mr-2" viewBox="0 0 20 20" fill="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                           </svg>
-                          <span>Full feature access</span>
+                          <span className="text-lg">Full feature access</span>
                         </li>
                         <li className="flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white mr-2" viewBox="0 0 20 20" fill="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                           </svg>
-                          <span>24/7 Support</span>
+                          <span className="text-lg">24/7 Support</span>
                         </li>
                         <li className="flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white mr-2" viewBox="0 0 20 20" fill="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                           </svg>
-                          <span>Regular Updates</span>
+                          <span className="text-lg">Regular Updates</span>
                         </li>
                       </ul>
-                      <button className={`w-full py-3 rounded-lg font-bold ${
+                      <button className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
                         plan.popular 
-                          ? 'bg-white text-black hover:bg-gray-200' 
-                          : 'bg-gray-800 text-white border border-gray-700 hover:border-white'
-                      } transition-colors`}>
+                          ? 'bg-white text-black hover:bg-gray-100 hover:scale-105 shadow-lg hover:shadow-xl' 
+                          : 'bg-white text-black hover:bg-gray-100 hover:scale-105 shadow-lg hover:shadow-xl'
+                      }`}>
                         Subscribe Now
                       </button>
                     </div>
@@ -685,23 +696,23 @@ const PanelPage: React.FC = () => {
 
               <div>
                 {/* Recharge Panel Credits */}
-                <div className="bg-gradient-to-br from-gray-800/20 to-black rounded-2xl border border-gray-700/50 p-6">
-                  <h2 className="text-2xl font-bold mb-6">Recharge Panel Credits</h2>
+                <div className="bg-gradient-to-br from-gray-800/40 to-black/60 rounded-3xl border border-gray-700/50 p-8 backdrop-blur-sm">
+                  <h2 className="text-2xl font-bold mb-8 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Recharge Panel Credits</h2>
                   
-                  <div className="mb-5">
-                    <label className="block text-sm font-medium mb-2">Panel Username</label>
+                  <div className="mb-6">
+                    <label className="block text-lg font-semibold mb-3 text-white">Panel Username</label>
                     <input
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white"
+                      className="w-full bg-gray-900/80 border-2 border-gray-600/50 rounded-xl px-6 py-4 text-white text-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all duration-300 backdrop-blur-sm"
                       placeholder="Enter your panel username"
                     />
                   </div>
                   
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2">
-                      Select Credits: {credits} credits (${(credits * 1.58).toFixed(2)})
+                  <div className="mb-8">
+                    <label className="block text-lg font-semibold mb-4 text-white">
+                      Select Credits: <span className="text-green-400">{credits} credits</span> <span className="text-blue-400">(${(credits * 1.58).toFixed(2)})</span>
                     </label>
                     <input
                       type="range"
@@ -710,15 +721,15 @@ const PanelPage: React.FC = () => {
                       step="10"
                       value={credits}
                       onChange={(e) => setCredits(parseInt(e.target.value))}
-                      className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-white"
+                      className="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-white mb-2"
                     />
-                    <div className="flex justify-between text-xs text-gray-400 mt-1">
+                    <div className="flex justify-between text-sm text-gray-400 font-medium">
                       <span>60</span>
                       <span>500</span>
                     </div>
                   </div>
                   
-                  <button className="w-full bg-white text-black hover:bg-gray-200 font-bold py-4 px-6 rounded-xl transition duration-300">
+                  <button className="w-full bg-white text-black hover:bg-gray-100 font-bold py-5 px-6 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
                     Recharge Now
                   </button>
                 </div>
@@ -727,18 +738,18 @@ const PanelPage: React.FC = () => {
           )}
 
           {activeTab === 'channels' && (
-            <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-1 gap-12">
               <div className="lg:col-span-1">
-                <h2 className="text-3xl font-bold mb-8">Available Channels</h2>
+                <h2 className="text-4xl font-bold mb-12 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Available Channels</h2>
                 
                 {/* Search Input */}
-                <div className="mb-6">
+                <div className="mb-8">
                   <input
                     type="text"
                     placeholder="Search channels..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white"
+                    className="w-full bg-gray-900/80 border-2 border-gray-600/50 rounded-xl px-6 py-4 text-white text-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all duration-300 backdrop-blur-sm"
                   />
                 </div>
                 
@@ -765,24 +776,24 @@ const PanelPage: React.FC = () => {
                       return (
                         <div key={channelData.id} className="flex flex-col h-full">
                           <div 
-                            className="flex justify-between items-center bg-gray-900/30 border border-gray-800 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
+                            className="group flex justify-between items-center bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer backdrop-blur-sm hover:border-white/40"
                             onClick={() => toggleCategory(channelData.name)}
                           >
                             <div className="flex items-center">
                               <img 
                                 src={channelData.logo} 
                                 alt={channelData.name} 
-                                className="w-8 h-8 rounded-full mr-3 object-contain"
+                                className="w-12 h-12 rounded-xl mr-4 object-contain group-hover:scale-110 transition-transform duration-300"
                                 onError={(e) => {
                                   const target = e.target as HTMLImageElement;
                                   target.style.display = 'none';
                                 }}
                               />
                               <div>
-                                <h2 className="text-lg font-bold text-white">
+                                <h2 className="text-xl font-bold text-white group-hover:text-gray-200 transition-colors duration-300">
                                   {channelData.name}
                                 </h2>
-                                <span className="text-xs text-gray-400">
+                                <span className="text-sm text-gray-400 font-medium">
                                   {searchTerm 
                                     ? `${filteredChannels.length} of ${channelData.channels.length} channels`
                                     : `${channelData.channels.length} channels`
@@ -791,7 +802,7 @@ const PanelPage: React.FC = () => {
                               </div>
                             </div>
                             <svg 
-                              className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${
+                              className={`w-6 h-6 text-gray-400 group-hover:text-white transform transition-all duration-300 ${
                                 expandedCategories[channelData.name] ? 'rotate-180' : ''
                               }`}
                               fill="none" 
@@ -804,19 +815,19 @@ const PanelPage: React.FC = () => {
                           
                           {/* Channels List - shown when category is expanded */}
                           {expandedCategories[channelData.name] && (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
                               {filteredChannels.map((channel, idx) => (
                                 <div 
                                   key={idx} 
-                                  className="bg-gray-900/30 border border-gray-800 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow duration-300"
+                                  className="group bg-gradient-to-br from-gray-800/40 to-gray-900/40 border border-gray-700/50 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm hover:border-white/30 hover:scale-105"
                                 >
                                   <div className="flex items-center">
-                                    <div className="w-8 h-8 rounded-md bg-gray-700 flex items-center justify-center mr-3 flex-shrink-0">
-                                      <span className="text-white text-xs font-bold">
+                                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                      <span className="text-white text-sm font-bold">
                                         {idx + 1}
                                       </span>
                                     </div>
-                                    <h3 className="text-sm font-medium text-white truncate">
+                                    <h3 className="text-sm font-semibold text-white truncate group-hover:text-gray-200 transition-colors duration-300">
                                       {channel}
                                     </h3>
                                   </div>
@@ -834,37 +845,41 @@ const PanelPage: React.FC = () => {
           )}
           
           {activeTab === 'support' && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="lg:col-span-2">
-                <h2 className="text-3xl font-bold mb-8">Support & Resources</h2>
+                <h2 className="text-4xl font-bold mb-12 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Support & Resources</h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                  <div className="p-6 bg-gray-900/30 rounded-2xl border border-gray-800">
-                    <div className="text-white mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                  <div className="group p-8 bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 backdrop-blur-sm hover:border-white/40 transition-all duration-300">
+                    <div className="text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">Live Chat Support</h3>
-                    <p className="text-gray-400 mb-4">Get instant help from our support team 24/7</p>
-                    <button className="text-white font-medium">Start Chat →</button>
+                    <h3 className="text-2xl font-bold mb-3 text-white">Live Chat Support</h3>
+                    <p className="text-gray-400 mb-6 text-lg">Get instant help from our support team 24/7</p>
+                    <button className="bg-white text-black hover:bg-gray-100 font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                      Start Chat →
+                    </button>
                   </div>
                   
-                  <div className="p-6 bg-gray-900/30 rounded-2xl border border-gray-800">
-                    <div className="text-white mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="group p-8 bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 backdrop-blur-sm hover:border-white/40 transition-all duration-300">
+                    <div className="text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">Documentation</h3>
-                    <p className="text-gray-400 mb-4">Comprehensive guides and tutorials</p>
-                    <button className="text-white font-medium">View Docs →</button>
+                    <h3 className="text-2xl font-bold mb-3 text-white">Documentation</h3>
+                    <p className="text-gray-400 mb-6 text-lg">Comprehensive guides and tutorials</p>
+                    <button className="bg-white text-black hover:bg-gray-100 font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                      View Docs →
+                    </button>
                   </div>
                 </div>
                 
-                <div className="bg-gray-900/30 rounded-2xl p-8 border border-gray-800">
-                  <h3 className="text-2xl font-bold mb-6">Frequently Asked Questions</h3>
-                  <div className="space-y-4">
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl p-10 border border-gray-700/50 backdrop-blur-sm">
+                  <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Frequently Asked Questions</h3>
+                  <div className="space-y-6">
                     {
                       [
                         {
@@ -880,9 +895,9 @@ const PanelPage: React.FC = () => {
                           answer: "We release regular updates with new features and improvements on a monthly basis."
                         }
                       ].map((faq, index) => (
-                        <div key={index} className="border-b border-gray-800 pb-4">
-                          <h4 className="font-bold text-lg mb-2">{faq.question}</h4>
-                          <p className="text-gray-400">{faq.answer}</p>
+                        <div key={index} className="border-b border-gray-700/50 pb-6 group">
+                          <h4 className="font-bold text-xl mb-3 text-white group-hover:text-gray-200 transition-colors duration-300">{faq.question}</h4>
+                          <p className="text-gray-400 text-lg leading-relaxed">{faq.answer}</p>
                         </div>
                       ))
                     }
@@ -891,38 +906,38 @@ const PanelPage: React.FC = () => {
               </div>
               
               <div>
-                <div className="bg-gradient-to-br from-gray-800/20 to-black rounded-2xl border border-gray-700/50 p-6">
-                  <h3 className="text-xl font-bold mb-4">Contact Support</h3>
-                  <p className="text-gray-300 mb-6">Need help? Our support team is here for you.</p>
+                <div className="bg-gradient-to-br from-gray-800/40 to-black/60 rounded-3xl border border-gray-700/50 p-8 backdrop-blur-sm">
+                  <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Contact Support</h3>
+                  <p className="text-gray-300 mb-8 text-lg leading-relaxed">Need help? Our support team is here for you.</p>
                   
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4 group">
+                      <div className="text-white group-hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                       </div>
-                      <span>support@reselleriptv.com</span>
+                      <span className="text-lg font-medium">support@reselleriptv.com</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="flex items-center gap-4 group">
+                      <div className="text-white group-hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
                       </div>
-                      <span>+1 (800) 123-4567</span>
+                      <span className="text-lg font-medium">+1 (800) 123-4567</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="flex items-center gap-4 group">
+                      <div className="text-white group-hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       </div>
-                      <span>24/7 Support</span>
+                      <span className="text-lg font-medium">24/7 Support</span>
                     </div>
                   </div>
                   
-                  <button className="w-full mt-6 bg-white text-black hover:bg-gray-200 font-bold py-3 px-4 rounded-lg transition duration-300">
+                  <button className="w-full mt-8 bg-white text-black hover:bg-gray-100 font-bold py-4 px-6 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
                     Open Support Ticket
                   </button>
                 </div>
@@ -931,10 +946,10 @@ const PanelPage: React.FC = () => {
           )}
 
           {/* Latest News & Updates */}
-          <div className="mt-16">
-            <h2 className="text-3xl font-bold mb-8">Latest News & Updates</h2>
-            <div className="bg-gray-900/30 rounded-2xl p-8 border border-gray-800">
-              <p className="text-gray-400 text-center py-8">No news for this panel yet. Check back soon for updates!</p>
+          <div className="mt-20">
+            <h2 className="text-4xl font-bold mb-12 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Latest News & Updates</h2>
+            <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl p-12 border border-gray-700/50 backdrop-blur-sm">
+              <p className="text-gray-400 text-center py-12 text-xl">No news for this panel yet. Check back soon for updates!</p>
             </div>
           </div>
         </div>

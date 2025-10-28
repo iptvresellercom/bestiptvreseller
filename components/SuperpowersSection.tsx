@@ -109,10 +109,14 @@ const SuperpowersSection: React.FC = () => {
                  <div className="overflow-hidden">
                      <div
                         className="flex transition-transform duration-500 ease-out"
-                        style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
+                        style={{ 
+                            transform: window.innerWidth < 768 
+                                ? `translateX(-${currentIndex * 100}%)` 
+                                : `translateX(-${currentIndex * (100 / 3)}%)` 
+                        }}
                      >
                         {slides.map((slide, index) => (
-                            <div key={index} className="flex-shrink-0 w-full md:w-1/3 px-3">
+                            <div key={index} className="flex-shrink-0 w-full md:w-1/3 px-2 md:px-3">
                                  <Link to={`/panels/${slide.slug}`} className={`relative rounded-3xl p-8 aspect-square flex flex-col justify-end bg-black/20 overflow-hidden border border-white/10 group cursor-pointer`}>
                                     <img src={slide.image} alt={slide.title} className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-500 ease-in-out group-hover:scale-105" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent z-1"></div>
@@ -133,20 +137,20 @@ const SuperpowersSection: React.FC = () => {
                  </div>
                  <div className="absolute top-0 right-0 h-full w-[10%] md:w-[20%] bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
                  
-                 {/* Navigation controls - only show if there are more slides than can be displayed at once */}
-                 {slides.length > 3 && (
+                 {/* Navigation controls */}
+                 {slides.length > 1 && (
                     <>
                          <button
                             onClick={prevSlide}
-                            className="absolute top-1/2 -left-4 md:-left-8 -translate-y-1/2 bg-gray-800/50 hover:bg-gray-700/80 text-white p-3 rounded-full z-20 transition-opacity duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="absolute top-1/2 left-2 md:-left-8 -translate-y-1/2 bg-gray-800/80 hover:bg-gray-700/90 text-white p-3 rounded-full z-20 transition-opacity duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
                             disabled={currentIndex === 0}
                         >
                             <ChevronLeftIcon />
                         </button>
                         <button
                             onClick={nextSlide}
-                            className="absolute top-1/2 -right-4 md:-right-8 -translate-y-1/2 bg-gray-800/50 hover:bg-gray-700/80 text-white p-3 rounded-full z-20 transition-opacity duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
-                            disabled={currentIndex >= slides.length - 3}
+                            className="absolute top-1/2 right-2 md:-right-8 -translate-y-1/2 bg-gray-800/80 hover:bg-gray-700/90 text-white p-3 rounded-full z-20 transition-opacity duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                            disabled={window.innerWidth < 768 ? currentIndex >= slides.length - 1 : currentIndex >= slides.length - 3}
                         >
                             <ChevronRightIcon />
                         </button>
@@ -158,7 +162,7 @@ const SuperpowersSection: React.FC = () => {
 
     return (
         <section className="bg-black text-white py-28">
-            <div className="max-w-[1400px] mx-auto px-6">
+            <div className="max-w-6xl mx-auto px-6">
                 <div className="text-center mb-12">
                     <p className="text-white/70 mb-2">IPTV panels for resellers with comprehensive management tools</p>
                     <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">

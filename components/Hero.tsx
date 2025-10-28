@@ -48,7 +48,7 @@ const Hero: React.FC = () => {
       
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgb(120_119_198_/60%),#f59e0b00)] z-10"></div>
       
-      <div className="relative z-20 px-4 w-full">
+      <div className="relative z-20 px-4 w-full max-w-6xl mx-auto">
         <div className="inline-block mb-8">
           <BITRLogo />
         </div>

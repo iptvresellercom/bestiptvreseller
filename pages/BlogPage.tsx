@@ -54,7 +54,7 @@ const BlogPage: React.FC = () => {
       <div className="bg-black text-white min-h-screen">
         <Header />
         <main className="pt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
             <div className="text-center py-20">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500 mb-4"></div>
               <p className="text-white/70">Loading blog posts...</p>
@@ -70,7 +70,7 @@ const BlogPage: React.FC = () => {
       <div className="bg-black text-white min-h-screen">
         <Header />
         <main className="pt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
             <div className="text-center py-20">
               <h1 className="text-3xl font-bold text-red-500 mb-4">Error</h1>
               <p className="text-white/70 mb-6">{error}</p>
@@ -92,7 +92,7 @@ const BlogPage: React.FC = () => {
       </Helmet>
       <Header />
       <main className="pt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
           <div className="mb-8">
             <Link to="/" className="text-amber-400 hover:text-amber-300 flex items-center gap-2">
               ← Back to Home

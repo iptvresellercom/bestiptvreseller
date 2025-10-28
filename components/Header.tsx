@@ -219,8 +219,8 @@ const Header: React.FC = () => {
         w-full max-w-5xl rounded-full flex items-center justify-between gap-6 px-6 py-2 border 
         transition-all duration-300 ease-in-out
         ${isScrolled 
-          ? 'xl:bg-[#0D0D0D]/80 xl:backdrop-blur-md bg-transparent border-white/20' 
-          : 'bg-[#0D0D0D] border-white/10'
+          ? 'bg-gradient-to-r from-black via-blue-950/40 to-black backdrop-blur-md border-blue-900/30' 
+          : 'bg-gradient-to-r from-black via-blue-950/40 to-black border-blue-900/30'
         }
       `}>
         <Link to="/" aria-label="BITR Home" className="p-1">

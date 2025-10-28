@@ -5,7 +5,7 @@ import { PlayIcon } from './icons/PlayIcon';
 const FeatureSection: React.FC = () => {
   return (
     <section className="py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div
           className="relative rounded-3xl overflow-hidden border border-white/10"
           style={{

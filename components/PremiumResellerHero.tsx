@@ -10,8 +10,8 @@ const PremiumResellerHero: React.FC = () => {
       }}
     >
       {/* Aspect ratio container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6" style={{ aspectRatio: '16/6' }}>
-        <div className="flex flex-col lg:flex-row items-center h-full">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 min-h-[600px] md:min-h-0" style={{ aspectRatio: window.innerWidth < 768 ? 'auto' : '16/6' }}>
+        <div className="flex flex-col lg:flex-row items-center h-full min-h-[600px] md:min-h-0">
           {/* LEFT SIDE - 40% width */}
           <motion.div 
             className="w-full lg:w-4/5 mb-12 lg:mb-0 lg:pr-8 flex flex-col justify-center"
