@@ -78,6 +78,19 @@ const Header: React.FC = () => {
     };
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   // Fetch menu items from WordPress API
   useEffect(() => {
     const fetchMenu = async () => {
@@ -246,16 +259,24 @@ const Header: React.FC = () => {
         {/* Mobile Menu Drawer */}
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop Overlay */}
+            {/* Backdrop Overlay - Fixed positioning */}
             <div 
-              className="xl:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 animate-slide-down"
+              className="xl:hidden fixed inset-0 bg-black/70 z-[100] animate-slide-down"
               onClick={() => setIsMobileMenuOpen(false)}
+              style={{ top: 0, left: 0, right: 0, bottom: 0 }}
             ></div>
             
-            {/* Menu Drawer */}
-            <div className="xl:hidden fixed top-0 right-0 w-80 h-full bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 z-50 flex flex-col shadow-2xl animate-slide-in-right">
-              {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
+            {/* Menu Drawer - Fixed positioning with solid background */}
+            <div 
+              className="xl:hidden fixed top-0 right-0 bottom-0 w-80 bg-[#0f172a] z-[101] flex flex-col shadow-2xl animate-slide-in-right overflow-hidden"
+              style={{ 
+                position: 'fixed',
+                height: '100vh',
+                maxHeight: '100vh'
+              }}
+            >
+              {/* Header - Solid background */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-700/50 bg-[#0f172a] flex-shrink-0">
                 <h2 className="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Menu</h2>
                 <button 
                   className="text-white hover:bg-white/10 p-2 rounded-lg transition-colors duration-200"
@@ -268,8 +289,8 @@ const Header: React.FC = () => {
                 </button>
               </div>
               
-              {/* Menu Items */}
-              <div className="flex-1 overflow-y-auto p-6">
+              {/* Menu Items - Scrollable with solid background */}
+              <div className="flex-1 overflow-y-auto p-6 bg-[#0f172a]">
                 <div className="flex flex-col gap-2">
                   {menuItems.map((item, index) => (
                     <div 
@@ -350,8 +371,8 @@ const Header: React.FC = () => {
                 </div>
               </div>
               
-              {/* Footer */}
-              <div className="p-6 border-t border-gray-700/50">
+              {/* Footer - Solid background */}
+              <div className="p-6 border-t border-gray-700/50 bg-[#0f172a] flex-shrink-0">
                 <Link
                   to="/contact"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -364,6 +385,46 @@ const Header: React.FC = () => {
           </>
         )}
       </nav>
+      
+      {/* Keyframes for animations */}
+      <style>{`
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        .animate-slide-in-right {
+          animation: slideInFromRight 0.3s ease-out;
+        }
+        
+        @keyframes slideInFromRight {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+        
+        .animate-slide-down {
+          animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      `}</style>
     </header>
   );
 };
