@@ -3,6 +3,15 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { data as channelsData } from '../constants/chnls.ts';
 
+<<<<<<< HEAD
+=======
+interface CreditPackage {
+  credits: number;
+  price: string;
+  months: number;
+}
+
+>>>>>>> master
 interface IPTVPanel {
   id: number;
   slug: string;
@@ -26,10 +35,14 @@ interface IPTVPanel {
       uptime: string;
     };
     pricing: {
+<<<<<<< HEAD
       one_month: string;
       three_months: string;
       six_months: string;
       twelve_months: string;
+=======
+      packages: CreditPackage[];
+>>>>>>> master
     };
     whatsapp_number: string;
     partnership: {
@@ -88,9 +101,19 @@ const PanelPage: React.FC = () => {
   const [panel, setPanel] = useState<IPTVPanel | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+<<<<<<< HEAD
   const [credits, setCredits] = useState<number>(120);
   const [username, setUsername] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'features' | 'pricing' | 'support' | 'channels'>('features');
+=======
+  const [credits, setCredits] = useState<number>(0);
+  const [username, setUsername] = useState<string>('');
+  const [whatsapp, setWhatsapp] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<'features' | 'pricing' | 'support' | 'channels'>('features');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [selectedPackageIndex, setSelectedPackageIndex] = useState<number>(0);
+>>>>>>> master
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
   const [searchTerm, setSearchTerm] = useState<string>('');
   const featuresRef = useRef<HTMLDivElement>(null);
@@ -156,6 +179,33 @@ const PanelPage: React.FC = () => {
     }
   };
 
+<<<<<<< HEAD
+=======
+  // Get credit packages from WordPress
+  const creditPackages = panel?.panel_data?.pricing?.packages || [];
+
+  // Get current selected package based on slider index
+  const getCurrentPackage = () => {
+    if (creditPackages.length === 0) return null;
+    return creditPackages[selectedPackageIndex] || creditPackages[0];
+  };
+
+  // Handle slider change - update to selected package
+  const handleSliderChange = (index: number) => {
+    setSelectedPackageIndex(index);
+    if (creditPackages[index]) {
+      setCredits(creditPackages[index].credits);
+    }
+  };
+
+  // Set initial credits when packages are loaded
+  useEffect(() => {
+    if (panel?.panel_data?.pricing?.packages?.length > 0 && credits === 0) {
+      setCredits(panel.panel_data.pricing.packages[0].credits);
+    }
+  }, [panel, credits]);
+
+>>>>>>> master
   if (loading) {
     return (
       <div className="bg-black text-white min-h-screen">
@@ -311,6 +361,7 @@ const PanelPage: React.FC = () => {
     convertAbsoluteUrlsToRelative(parser.parseFromString(panel.excerpt.rendered, 'text/html').body.textContent || '') : 
     '';
 
+<<<<<<< HEAD
   // Get pricing from WordPress
   const pricingPlans = [
     { 
@@ -337,6 +388,164 @@ const PanelPage: React.FC = () => {
       savings: 'Save 46%', 
       popular: false 
     }
+=======
+  // Calculate price per credit based on packages
+  const calculatePrice = (creditsAmount: number): string => {
+    if (creditPackages.length === 0) {
+      return `${(creditsAmount * 1.58).toFixed(2)}`;
+    }
+
+    // First check if creditsAmount matches any package exactly
+    const matchingPackage = creditPackages.find(pkg => pkg.credits === creditsAmount);
+    if (matchingPackage) {
+      return matchingPackage.price;
+    }
+
+    // If no exact match, calculate proportionally based on first package
+    let pricePerCredit = 0;
+    
+    if (creditPackages.length > 0) {
+      // Use the first package as base
+      const basePackage = creditPackages[0];
+      const basePrice = parseFloat(basePackage.price.replace(/[^0-9.]/g, ''));
+      pricePerCredit = basePrice / basePackage.credits;
+    }
+
+    const calculatedPrice = creditsAmount * pricePerCredit;
+    const currencySymbol = creditPackages[0]?.price.replace(/[0-9.]/g, '') || '€';
+    
+    return `${calculatedPrice.toFixed(2)}${currencySymbol}`;
+  };
+
+  // Handle credit recharge submission
+  const handleRechargeSubmit = async () => {
+    // Validation
+    if (!username.trim()) {
+      setSubmitMessage({ type: 'error', text: 'Please enter your panel username' });
+      return;
+    }
+
+    if (!whatsapp.trim()) {
+      setSubmitMessage({ type: 'error', text: 'Please enter your WhatsApp number' });
+      return;
+    }
+
+    // Basic WhatsApp validation (should start with + and contain only digits)
+    const whatsappRegex = /^\+?[1-9]\d{1,14}$/;
+    if (!whatsappRegex.test(whatsapp.trim())) {
+      setSubmitMessage({ type: 'error', text: 'Please enter a valid WhatsApp number (e.g., +1234567890)' });
+      return;
+    }
+
+    if (credits === 0 || !getCurrentPackage()) {
+      setSubmitMessage({ type: 'error', text: 'Please select a credit package' });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitMessage(null);
+
+    try {
+      const calculatedPrice = calculatePrice(credits);
+      const requestData = {
+        username: username.trim(),
+        whatsapp: whatsapp.trim(),
+        credits: credits,
+        price: calculatedPrice,
+        panel_name: panel.title.rendered,
+      };
+
+      console.log('Sending order:', requestData); // Debug log
+
+      const response = await fetch('https://blrparis.com/wp-json/wp/v2/credit-orders/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      console.log('Response status:', response.status); // Debug log
+
+      const data = await response.json();
+      console.log('Response data:', data); // Debug log
+
+      if (response.ok && data.success) {
+        setSubmitMessage({ 
+          type: 'success', 
+          text: `✅ Order submitted successfully! Order ID: #${data.order_id}. We will contact you on WhatsApp soon.` 
+        });
+        
+        // Send email notification via backend service
+        console.log('Attempting to send email notification via backend service');
+        const rechargeDetails = {
+          username: username.trim(),
+          whatsapp: whatsapp.trim(),
+          credits: credits,
+          price: calculatedPrice,
+          panel_name: panel.title.rendered,
+          order_id: data.order_id
+        };
+        
+        // Send email notification to backend service
+        fetch('http://localhost:3001/send-recharge-notification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(rechargeDetails)
+        }).then(response => {
+          if (response.ok) {
+            console.log('Email notification request sent successfully');
+          } else {
+            console.error('Failed to send email notification request');
+          }
+        }).catch(error => {
+          console.error('Error sending email notification request:', error);
+          // Don't show error to user since this is a background operation
+          // The main order submission was successful
+        });
+        
+        // Reset form
+        setUsername('');
+        setWhatsapp('');
+        setSelectedPackageIndex(0);
+        if (creditPackages.length > 0) {
+          setCredits(creditPackages[0].credits);
+        }
+        
+        // Auto-hide success message after 5 seconds
+        setTimeout(() => {
+          setSubmitMessage(null);
+        }, 5000);
+      } else {
+        setSubmitMessage({ 
+          type: 'error', 
+          text: data.message || 'Failed to submit order. Please try again.' 
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting order:', error); // Debug log
+      setSubmitMessage({ 
+        type: 'error', 
+        text: 'Network error. Please check your connection and try again.' 
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Default features for pricing cards
+  const pricingFeatures = [
+    '+60,000 TV Channels',
+    '+66,000 Movies & Series',
+    '4K / Ultra HD Picture Quality',
+    'FREE Channels & VOD Updates',
+    '99.9% Server Uptime',
+    'All Devices are Supported',
+    '24/7 Technical Assistance'
+>>>>>>> master
   ];
 
   const HtmlContentWithLinks: React.FC<{ content: string }> = ({ content }) => {
@@ -480,7 +689,11 @@ const PanelPage: React.FC = () => {
             </Link>
           </div>
 
+<<<<<<< HEAD
           {/* Tab Navigation - Simple Horizontal Scroll */}
+=======
+          {/* Tab Navigation */}
+>>>>>>> master
           <div className="mb-12 overflow-x-auto scrollbar-hide">
             <div className="flex gap-2 min-w-max border-b-2 border-gray-800 pb-2">
               <button
@@ -591,7 +804,11 @@ const PanelPage: React.FC = () => {
               </div>
 
               <div>
+<<<<<<< HEAD
                 {/* Partnership Section - Static */}
+=======
+                {/* Partnership Section */}
+>>>>>>> master
                 <div className="bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-3xl border border-purple-500/30 p-8 mb-8 backdrop-blur-sm">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="bg-gradient-to-br from-purple-500 to-blue-500 p-3 rounded-xl">
@@ -682,6 +899,7 @@ const PanelPage: React.FC = () => {
           )}
 
           {activeTab === 'pricing' && (
+<<<<<<< HEAD
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="lg:col-span-2">
                 <h2 className="text-4xl font-bold mb-12">Flexible Pricing Plans</h2>
@@ -776,6 +994,205 @@ const PanelPage: React.FC = () => {
                   <button className="w-full bg-white text-black hover:bg-gray-100 font-bold py-5 px-6 rounded-xl text-lg transition-all duration-300 hover:scale-105">
                     Recharge Now
                   </button>
+=======
+            <div>
+              <h2 className="text-4xl font-bold mb-12 text-center">Credit Packages & Recharge</h2>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                {/* LEFT COLUMN - Pricing Packages */}
+                <div>
+                  {/* <h3 className="text-2xl font-bold mb-8">Available Packages</h3> */}
+                  {creditPackages.length > 0 ? (
+                    <div className="grid grid-cols-2 gap-4">
+                      {creditPackages.map((pkg, index) => (
+                        <div 
+                          key={index} 
+                          className="relative rounded-2xl border-2 border-gray-700/50 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm hover:border-white/30 transition-all duration-300 overflow-hidden p-5"
+                        >
+                          {/* ONE TIME Label */}
+                          <div className="text-center mb-2">
+                            <span className="text-xs font-semibold text-gray-400 tracking-widest uppercase">
+                              One Time
+                            </span>
+                          </div>
+
+                          {/* Credits Amount */}
+                          <div className="text-center mb-3">
+                            <h3 className="text-xl font-bold text-white">
+                              {pkg.credits} Credits
+                            </h3>
+                          </div>
+
+                          {/* Price */}
+                          <div className="text-center mb-2">
+                            <div className="text-4xl font-bold text-white">
+                              {pkg.price}
+                            </div>
+                          </div>
+
+                          {/* Credits = Months */}
+                          <div className="text-center mb-4 pb-3 border-b border-gray-700/50">
+                            <p className="text-xs font-semibold text-gray-400">
+                              {pkg.credits} CREDITS = {pkg.months} MONTHS
+                            </p>
+                          </div>
+
+                          {/* Features List - Compact */}
+                          <ul className="space-y-2 mb-4">
+                            {pricingFeatures.slice(0, 4).map((feature, idx) => (
+                              <li key={idx} className="flex items-start gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span className="text-gray-300 text-xs leading-tight">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          {/* Order Button */}
+                          <button 
+                            onClick={handleViewPricing}
+                            className="w-full py-3 bg-white hover:bg-gray-100 text-black font-bold text-sm rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
+                          >
+                            ORDER NOW
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12 bg-gray-800/40 rounded-2xl border border-gray-700/50">
+                      <p className="text-gray-400 text-lg">No pricing packages available.</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* RIGHT COLUMN - Recharge Form */}
+                <div>
+                  <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border-2 border-gray-700/50 p-8 sticky top-24">
+                    <h3 className="text-2xl font-bold mb-8 text-center text-white">Recharge Panel Credits</h3>
+                    
+                    {/* Success/Error Messages */}
+                    {submitMessage && (
+                      <div className={`mb-6 p-4 rounded-xl border-2 ${
+                        submitMessage.type === 'success' 
+                          ? 'bg-green-900/20 border-green-500 text-green-400' 
+                          : 'bg-red-900/20 border-red-500 text-red-400'
+                      }`}>
+                        <div className="flex items-start gap-3">
+                          {submitMessage.type === 'success' ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          )}
+                          <span className="font-medium text-sm leading-relaxed">{submitMessage.text}</span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Username Field */}
+                    <div className="mb-6">
+                      <label className="block text-base font-semibold mb-3 text-white">
+                        Panel Username <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="w-full bg-gray-900/80 border-2 border-gray-600/50 rounded-xl px-5 py-3 text-white text-base focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all duration-300 placeholder-gray-500"
+                        placeholder="Enter your username"
+                        disabled={isSubmitting}
+                        required
+                      />
+                    </div>
+
+                    {/* WhatsApp Field */}
+                    <div className="mb-6">
+                      <label className="block text-base font-semibold mb-3 text-white">
+                        WhatsApp Number <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        value={whatsapp}
+                        onChange={(e) => setWhatsapp(e.target.value)}
+                        className="w-full bg-gray-900/80 border-2 border-gray-600/50 rounded-xl px-5 py-3 text-white text-base focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all duration-300 placeholder-gray-500"
+                        placeholder="+1234567890"
+                        disabled={isSubmitting}
+                        required
+                      />
+                      <p className="text-xs text-gray-400 mt-2">Include country code (e.g., +1 for US)</p>
+                    </div>
+                    
+                    {/* Credits Slider */}
+                    <div className="mb-8">
+                      <label className="block text-base font-semibold mb-4 text-white">
+                        Select Package
+                      </label>
+                      <div className="text-center mb-6">
+                        <span className="text-5xl font-bold text-green-400">{credits}</span>
+                        <span className="text-xl text-gray-400 ml-2">credits</span>
+                        <div className="text-4xl font-bold text-white mt-3">
+                          {calculatePrice(credits)}
+                        </div>
+                      </div>
+                      {creditPackages.length > 1 ? (
+                        <>
+                          <input
+                            type="range"
+                            min="0"
+                            max={creditPackages.length - 1}
+                            step="1"
+                            value={selectedPackageIndex}
+                            onChange={(e) => handleSliderChange(parseInt(e.target.value))}
+                            className="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-white mb-3"
+                            disabled={isSubmitting}
+                          />
+                          <div className="flex justify-between text-sm text-gray-400 font-medium px-1">
+                            {creditPackages.map((pkg, index) => (
+                              <span key={index} className="text-xs">
+                                {pkg.credits}
+                              </span>
+                            ))}
+                          </div>
+                        </>
+                      ) : creditPackages.length === 1 ? (
+                        <div className="text-center text-gray-400 text-sm py-4 bg-gray-800/50 rounded-lg">
+                          Only one package available
+                        </div>
+                      ) : (
+                        <div className="text-center text-gray-400 text-sm py-4 bg-gray-800/50 rounded-lg">
+                          No packages available
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Recharge Button */}
+                    <button 
+                      onClick={handleRechargeSubmit}
+                      disabled={isSubmitting}
+                      className="w-full bg-white hover:bg-gray-100 text-black font-bold py-4 px-6 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center gap-3">
+                          <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing...
+                        </span>
+                      ) : (
+                        'Recharge Now'
+                      )}
+                    </button>
+
+                    <p className="text-xs text-gray-400 text-center mt-4">
+                      <span className="text-red-500">*</span> Required fields
+                    </p>
+                  </div>
+>>>>>>> master
                 </div>
               </div>
             </div>
@@ -1001,4 +1418,8 @@ const PanelPage: React.FC = () => {
   );
 };
 
+<<<<<<< HEAD
 export default PanelPage;
+=======
+export default PanelPage;
+>>>>>>> master

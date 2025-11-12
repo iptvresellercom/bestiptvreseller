@@ -139,4 +139,8 @@ const Hero: React.FC = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Hero;
+=======
+export default Hero;
+>>>>>>> master
