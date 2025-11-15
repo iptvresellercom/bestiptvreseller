@@ -1,12 +1,11 @@
-<<<<<<< HEAD
+/// <reference types="vite/client" />
+
 // Provide minimal global declarations for test utilities referenced in test files
 declare var jest: any;
 
 declare namespace jest {
 	interface Mock extends Function {}
 }
-=======
-/// <reference types="vite/client" />
 
 interface ImportMetaEnv {
   readonly VITE_SMTP_EMAIL: string;
@@ -18,4 +17,3 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
->>>>>>> master

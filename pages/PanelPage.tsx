@@ -3,15 +3,12 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { data as channelsData } from '../constants/chnls.ts';
 
-<<<<<<< HEAD
-=======
 interface CreditPackage {
   credits: number;
   price: string;
   months: number;
 }
 
->>>>>>> master
 interface IPTVPanel {
   id: number;
   slug: string;
@@ -35,14 +32,7 @@ interface IPTVPanel {
       uptime: string;
     };
     pricing: {
-<<<<<<< HEAD
-      one_month: string;
-      three_months: string;
-      six_months: string;
-      twelve_months: string;
-=======
       packages: CreditPackage[];
->>>>>>> master
     };
     whatsapp_number: string;
     partnership: {
@@ -101,11 +91,6 @@ const PanelPage: React.FC = () => {
   const [panel, setPanel] = useState<IPTVPanel | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-<<<<<<< HEAD
-  const [credits, setCredits] = useState<number>(120);
-  const [username, setUsername] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'features' | 'pricing' | 'support' | 'channels'>('features');
-=======
   const [credits, setCredits] = useState<number>(0);
   const [username, setUsername] = useState<string>('');
   const [whatsapp, setWhatsapp] = useState<string>('');
@@ -113,7 +98,6 @@ const PanelPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState<number>(0);
->>>>>>> master
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
   const [searchTerm, setSearchTerm] = useState<string>('');
   const featuresRef = useRef<HTMLDivElement>(null);
@@ -179,8 +163,6 @@ const PanelPage: React.FC = () => {
     }
   };
 
-<<<<<<< HEAD
-=======
   // Get credit packages from WordPress
   const creditPackages = panel?.panel_data?.pricing?.packages || [];
 
@@ -205,7 +187,6 @@ const PanelPage: React.FC = () => {
     }
   }, [panel, credits]);
 
->>>>>>> master
   if (loading) {
     return (
       <div className="bg-black text-white min-h-screen">
@@ -361,34 +342,6 @@ const PanelPage: React.FC = () => {
     convertAbsoluteUrlsToRelative(parser.parseFromString(panel.excerpt.rendered, 'text/html').body.textContent || '') : 
     '';
 
-<<<<<<< HEAD
-  // Get pricing from WordPress
-  const pricingPlans = [
-    { 
-      name: '1 Month', 
-      price: panel.panel_data?.pricing?.one_month || 'N/A', 
-      savings: '', 
-      popular: false 
-    },
-    { 
-      name: '3 Months', 
-      price: panel.panel_data?.pricing?.three_months || 'N/A', 
-      savings: 'Save 10%', 
-      popular: true 
-    },
-    { 
-      name: '6 Months', 
-      price: panel.panel_data?.pricing?.six_months || 'N/A', 
-      savings: 'Save 17%', 
-      popular: false 
-    },
-    { 
-      name: '12 Months', 
-      price: panel.panel_data?.pricing?.twelve_months || 'N/A', 
-      savings: 'Save 46%', 
-      popular: false 
-    }
-=======
   // Calculate price per credit based on packages
   const calculatePrice = (creditsAmount: number): string => {
     if (creditPackages.length === 0) {
@@ -545,7 +498,6 @@ const PanelPage: React.FC = () => {
     '99.9% Server Uptime',
     'All Devices are Supported',
     '24/7 Technical Assistance'
->>>>>>> master
   ];
 
   const HtmlContentWithLinks: React.FC<{ content: string }> = ({ content }) => {
@@ -689,11 +641,7 @@ const PanelPage: React.FC = () => {
             </Link>
           </div>
 
-<<<<<<< HEAD
-          {/* Tab Navigation - Simple Horizontal Scroll */}
-=======
           {/* Tab Navigation */}
->>>>>>> master
           <div className="mb-12 overflow-x-auto scrollbar-hide">
             <div className="flex gap-2 min-w-max border-b-2 border-gray-800 pb-2">
               <button
@@ -804,11 +752,7 @@ const PanelPage: React.FC = () => {
               </div>
 
               <div>
-<<<<<<< HEAD
-                {/* Partnership Section - Static */}
-=======
                 {/* Partnership Section */}
->>>>>>> master
                 <div className="bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-3xl border border-purple-500/30 p-8 mb-8 backdrop-blur-sm">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="bg-gradient-to-br from-purple-500 to-blue-500 p-3 rounded-xl">
@@ -899,102 +843,6 @@ const PanelPage: React.FC = () => {
           )}
 
           {activeTab === 'pricing' && (
-<<<<<<< HEAD
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              <div className="lg:col-span-2">
-                <h2 className="text-4xl font-bold mb-12">Flexible Pricing Plans</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {pricingPlans.map((plan, index) => (
-                    <div 
-                      key={index} 
-                      className={`relative rounded-3xl p-8 border-2 hover:scale-105 transition-all duration-300 ${
-                        plan.popular 
-                          ? 'bg-gray-700/40 border-white/50' 
-                          : 'bg-gray-800/50 border-gray-700/50 hover:border-white/30'
-                      }`}
-                    >
-                      {plan.popular && (
-                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-black text-sm font-bold px-6 py-2 rounded-full">
-                          Most Popular
-                        </div>
-                      )}
-                      <div className="text-center mb-8">
-                        <h3 className="text-2xl font-bold mb-3">{plan.name}</h3>
-                        <div className="text-4xl font-bold text-white mb-2">{plan.price}</div>
-                        {plan.savings && (
-                          <p className="text-green-400 font-semibold text-lg">{plan.savings}</p>
-                        )}
-                      </div>
-                      <ul className="space-y-4 mb-8">
-                        <li className="flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-lg">Full feature access</span>
-                        </li>
-                        <li className="flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-lg">24/7 Support</span>
-                        </li>
-                        <li className="flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-lg">Regular Updates</span>
-                        </li>
-                      </ul>
-                      <button 
-                        onClick={handleViewPricing}
-                        className="w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 bg-white text-black hover:bg-gray-100 hover:scale-105"
-                      >
-                        Subscribe Now
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                {/* Recharge Panel Credits */}
-                <div className="bg-gray-800/40 rounded-3xl border border-gray-700/50 p-8">
-                  <h2 className="text-2xl font-bold mb-8">Recharge Panel Credits</h2>
-                  
-                  <div className="mb-6">
-                    <label className="block text-lg font-semibold mb-3 text-white">Panel Username</label>
-                    <input
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      className="w-full bg-gray-900/80 border-2 border-gray-600/50 rounded-xl px-6 py-4 text-white text-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all duration-300"
-                      placeholder="Enter your panel username"
-                    />
-                  </div>
-                  
-                  <div className="mb-8">
-                    <label className="block text-lg font-semibold mb-4 text-white">
-                      Select Credits: <span className="text-green-400">{credits} credits</span> <span className="text-blue-400">(${(credits * 1.58).toFixed(2)})</span>
-                    </label>
-                    <input
-                      type="range"
-                      min="60"
-                      max="500"
-                      step="10"
-                      value={credits}
-                      onChange={(e) => setCredits(parseInt(e.target.value))}
-                      className="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-white mb-2"
-                    />
-                    <div className="flex justify-between text-sm text-gray-400 font-medium">
-                      <span>60</span>
-                      <span>500</span>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full bg-white text-black hover:bg-gray-100 font-bold py-5 px-6 rounded-xl text-lg transition-all duration-300 hover:scale-105">
-                    Recharge Now
-                  </button>
-=======
             <div>
               <h2 className="text-4xl font-bold mb-12 text-center">Credit Packages & Recharge</h2>
               
@@ -1192,7 +1040,6 @@ const PanelPage: React.FC = () => {
                       <span className="text-red-500">*</span> Required fields
                     </p>
                   </div>
->>>>>>> master
                 </div>
               </div>
             </div>
@@ -1418,8 +1265,4 @@ const PanelPage: React.FC = () => {
   );
 };
 
-<<<<<<< HEAD
 export default PanelPage;
-=======
-export default PanelPage;
->>>>>>> master

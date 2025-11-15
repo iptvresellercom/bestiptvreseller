@@ -346,8 +346,4 @@ const ReviewSection: React.FC = () => {
   );
 };
 
-<<<<<<< HEAD
 export default ReviewSection;
-=======
-export default ReviewSection;
->>>>>>> master
